@@ -76,24 +76,87 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tab:hover{color:var(--ink);border-color:var(--ink)}
 .tab.active{background:var(--lime);border-color:var(--lime);color:#0A0A0A}
 
-/* ===================== 掌握情况：统计条 ===================== */
+/* ===================== 支持项目：入口按钮 + 二维码弹层 ===================== */
+.donate-btn{
+  flex:none;display:inline-flex;align-items:center;gap:9px;
+  padding:9px 16px;border:var(--bw) solid var(--orange);
+  background:transparent;color:var(--orange);
+  font-family:var(--ff-disp);font-size:12.5px;font-weight:700;letter-spacing:.16em;
+  transition:.15s;white-space:nowrap;
+}
+.donate-btn i{width:9px;height:9px;background:var(--orange);flex:none;transition:.15s}
+.donate-btn:hover{background:var(--orange);color:#0A0A0A}
+.donate-btn:hover i{background:#0A0A0A}
+
+.donate-modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:24px}
+.donate-modal[hidden]{display:none}
+.donate-backdrop{position:absolute;inset:0;background:rgba(10,10,10,.9)}
+.donate-panel{
+  position:relative;width:min(720px,100%);max-height:calc(100vh - 48px);overflow-y:auto;
+  background:var(--bg);border:var(--bw) solid var(--line-2);
+}
+.donate-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:20px;
+  padding:26px 26px 20px;border-bottom:var(--bw) solid var(--line-2);
+}
+.donate-kicker{font-family:var(--ff-disp);font-size:11px;font-weight:700;letter-spacing:.26em;color:var(--orange)}
+.donate-head h3{font-size:clamp(22px,3vw,32px);font-weight:900;letter-spacing:-.02em;margin-top:10px;line-height:1.05}
+.donate-close{
+  flex:none;width:38px;height:38px;display:grid;place-items:center;
+  border:var(--bw) solid var(--line-2);font-size:20px;font-weight:900;line-height:1;color:var(--muted);
+  transition:.15s;
+}
+.donate-close:hover{border-color:var(--orange);background:var(--orange);color:#0A0A0A}
+.donate-body{padding:24px 26px 28px}
+.donate-note{font-size:14px;color:var(--muted);max-width:64ch;line-height:1.75}
+.donate-note b{color:var(--ink)}
+.donate-codes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px}
+.donate-code{border:var(--bw) solid var(--line-2);background:var(--card)}
+.code-frame{position:relative;aspect-ratio:1;padding:18px;background:var(--card)}
+.code-frame img{width:100%;height:100%;object-fit:contain;background:#fff}
+.code-ph{
+  position:absolute;inset:18px;border:var(--bw) solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px;
+}
+.code-ph b{font-family:var(--ff-disp);font-size:15px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.code-ph span{font-family:var(--ff-disp);font-size:11px;letter-spacing:.04em;color:var(--muted);word-break:break-all;opacity:.7}
+.code-frame.has-img .code-ph{display:none}
+.donate-code figcaption{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:13px 16px;border-top:var(--bw) solid var(--line-2);
+}
+.donate-code figcaption b{font-size:15px;font-weight:900}
+.donate-code figcaption span{font-family:var(--ff-disp);font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.donate-foot{
+  margin-top:24px;padding-top:18px;border-top:var(--bw) solid var(--line);
+  font-size:12.5px;color:var(--muted);line-height:1.75;
+}
+body.donate-open{overflow:hidden}
+
+@media(max-width:680px){
+  .donate-btn{padding:8px 10px;font-size:11px;letter-spacing:.06em;gap:6px}
+  .donate-codes{grid-template-columns:1fr;gap:16px}
+  .donate-head{padding:20px 18px 16px}
+  .donate-body{padding:18px 18px 22px}
+  .donate-modal{padding:14px}
+  .donate-head h3{font-size:20px}
+}
+
+/* ===================== 封神榜：战力总览 ===================== */
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);border:var(--bw) solid var(--line-2)}
 .stat-box{padding:22px 20px;border-right:var(--bw) solid var(--line-2);background:var(--bg)}
 .stat-box:last-child{border-right:none}
 .stat-box b{
   display:block;font-family:var(--ff-disp);font-weight:700;
-  font-size:clamp(34px,4.6vw,56px);line-height:1;letter-spacing:-.02em;
+  font-size:clamp(34px,4.6vw,56px);line-height:1;letter-spacing:-.02em;color:var(--ink);
 }
 .stat-box span{
   display:block;margin-top:10px;font-family:var(--ff-disp);
   font-size:11px;letter-spacing:.18em;color:var(--muted);
 }
-.stat-box.mastered b{color:var(--lime)}
-.stat-box.learning b{color:var(--orange)}
-.stat-box.locked b{color:var(--muted)}
-.stat-box.pct b{color:var(--lime)}
-.progress-track.xl{width:100%;height:26px;margin-top:16px;border:var(--bw) solid var(--line-2);background:var(--bg);overflow:hidden}
-.progress-fill{height:100%;width:0;background:var(--lime);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.stat-box.lime b{color:var(--lime)}
+.stat-box.orange b{color:var(--orange)}
+.stat-box.dim b{color:var(--muted)}
 
 /* ===================== 区块通用 ===================== */
 section{max-width:var(--maxw);margin:0 auto;padding:88px 24px}
@@ -220,7 +283,7 @@ section{max-width:var(--maxw);margin:0 auto;padding:88px 24px}
 .mtc-status.s-mastered{background:var(--lime);border-color:var(--lime);color:#0A0A0A}
 .mtc-status.s-learning{background:var(--orange);border-color:var(--orange);color:#0A0A0A}
 
-/* ===================== 我的技能树 (筛选) ===================== */
+/* ===================== 筛选用 chip（封神榜复用） ===================== */
 .filter-bar{
   display:flex;gap:8px;flex-wrap:wrap;align-items:center;
   margin-bottom:24px;padding-bottom:24px;border-bottom:var(--bw) solid var(--line);
@@ -232,28 +295,51 @@ section{max-width:var(--maxw);margin:0 auto;padding:88px 24px}
 }
 .chip:hover{color:var(--ink);border-color:var(--ink)}
 .chip.active{background:var(--lime);border-color:var(--lime);color:#0A0A0A}
-.reset-btn{
-  margin-left:auto;font-size:13px;font-weight:800;color:var(--orange);
-  padding:9px 14px;border:var(--bw) solid var(--orange);
+/* ===================== 封神榜：选手卡片 ===================== */
+.legends-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.legend-card{
+  position:relative;display:flex;flex-direction:column;gap:18px;
+  background:var(--card);border:var(--bw) solid var(--line-2);
+  padding:20px 20px 18px 26px;transition:.15s;
 }
-.reset-btn:hover{background:var(--orange);color:#0A0A0A}
-.mytree-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.mytree-card{
-  border:var(--bw) solid var(--line-2);padding:18px;background:var(--card);
-  display:flex;flex-direction:column;gap:10px;transition:.15s;
+.legend-card::before{content:"";position:absolute;left:-2px;top:-2px;bottom:-2px;width:6px;background:var(--line-2)}
+.legend-card:hover{border-color:var(--lime)}
+.legend-card:hover::before{background:var(--lime)}
+.legend-card.top::before{background:var(--lime)}
+.legend-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.legend-rank{font-family:var(--ff-disp);font-size:36px;font-weight:700;line-height:.85;letter-spacing:-.02em;color:var(--lime)}
+.legend-rank small{display:block;margin-top:7px;font-family:var(--ff-disp);font-size:10px;font-weight:600;letter-spacing:.2em;color:var(--muted)}
+.legend-card.top .legend-rank{color:var(--orange)}
+.legend-id{text-align:right;min-width:0}
+.legend-flag{
+  display:inline-block;font-family:var(--ff-disp);font-size:11px;font-weight:700;letter-spacing:.14em;
+  padding:3px 9px;border:var(--bw) solid var(--line-2);color:var(--ink);
 }
-.mytree-card:hover{border-color:var(--lime)}
-.mytree-card.mastered{border-color:var(--lime)}
-.mytree-card.learning{border-color:var(--orange)}
-.mytree-card .mtc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.mytree-card .mtc-lv{font-family:var(--ff-disp);font-size:12px;font-weight:700;color:var(--lime);letter-spacing:.14em}
-.mytree-card .mtc-name{font-weight:800;font-size:16px;letter-spacing:-.01em}
-.mytree-card .mtc-desc{font-size:13px;color:var(--muted)}
-.mytree-empty{
-  grid-column:1/-1;padding:64px 24px;text-align:center;
-  border:var(--bw) solid var(--line-2);color:var(--muted);
+.legend-country{font-size:12.5px;color:var(--muted);margin-top:7px}
+.legend-name{font-size:clamp(26px,3vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1.04}
+.legend-en{font-family:var(--ff-disp);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.legend-meta{margin-top:13px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.legend-cat{font-size:11px;font-weight:800;letter-spacing:.1em;padding:3px 9px;border:var(--bw) solid var(--orange);color:var(--orange)}
+.legend-era{font-family:var(--ff-disp);font-size:11px;letter-spacing:.14em;color:var(--muted)}
+.legend-honors{list-style:none;display:flex;flex-direction:column;gap:8px;border-top:var(--bw) solid var(--line);padding-top:16px}
+.legend-honors li{position:relative;padding-left:17px;font-size:13.5px;color:var(--muted);line-height:1.5}
+.legend-honors li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;background:var(--lime)}
+.legend-honors li:first-child{color:var(--ink);font-weight:800}
+.legend-honors li:first-child::before{background:var(--orange)}
+.legend-footer{display:flex;flex-direction:column;gap:14px;margin-top:auto}
+.legend-power{display:flex;align-items:flex-end;gap:14px}
+.legend-power-num{font-family:var(--ff-disp);font-size:42px;font-weight:700;line-height:.82;letter-spacing:-.02em;color:var(--lime);flex:none}
+.legend-power-body{flex:1;min-width:0}
+.legend-power-label{font-family:var(--ff-disp);font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:8px}
+.power-bar{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;height:17px}
+.power-bar i{display:block;border:var(--bw) solid var(--line-2);background:var(--bg)}
+.power-bar i.on{background:var(--lime);border-color:var(--lime)}
+.legend-racket{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  border:var(--bw) solid var(--line-2);padding:11px 14px;background:var(--bg);
 }
-.mytree-empty b{display:block;color:var(--ink);font-size:17px;margin-bottom:8px}
+.legend-racket .rk-label{font-family:var(--ff-disp);font-size:10px;letter-spacing:.18em;color:var(--orange);flex:none}
+.legend-racket .rk-model{font-size:13px;font-weight:800;letter-spacing:-.01em}
 
 /* ===================== 页面容器 ===================== */
 .page{display:block}
@@ -417,6 +503,11 @@ footer{
   border-top:var(--bw) solid var(--line-2);
 }
 footer b{color:var(--ink)}
+.foot-donate{
+  font-family:var(--ff-disp);font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--muted);
+  padding:8px 14px;border:var(--bw) solid var(--line-2);transition:.15s;
+}
+.foot-donate:hover{border-color:var(--orange);color:var(--orange)}
 
 /* ===================== 响应式 ===================== */
 @media(max-width:1080px){
@@ -433,7 +524,9 @@ footer b{color:var(--ink)}
   .skills-grid{padding:16px}
 }
 @media(max-width:680px){
-  .nav-tabs{gap:6px;max-width:calc(100vw - 150px)}
+  .brand{flex:none}
+  .brand-name{white-space:nowrap;font-size:16px}
+  .nav-tabs{gap:6px;max-width:calc(100vw - 272px);flex:none}
   .tab{padding:7px 12px;font-size:13px}
   .tree-rail{padding:12px}
   .level-node{width:36px;height:36px;font-size:15px}
@@ -445,6 +538,8 @@ footer b{color:var(--ink)}
   .stat-box:nth-child(2n){border-right:none}
   .stat-box:nth-child(-n+2){border-bottom:var(--bw) solid var(--line-2)}
   .stat-box b{font-size:34px}
+  .legend-card{padding:18px 16px 16px 22px}
+  .legend-power-num{font-size:34px}
   .cal-body{grid-auto-rows:minmax(72px,auto)}
   .cal-cell{min-height:72px;padding:5px}
   .cal-event{font-size:9.5px;padding:2px 4px}
@@ -471,10 +566,11 @@ footer b{color:var(--ink)}
     </a>
     <div class="nav-tabs" role="tablist" data-page-node-id="wIdfKFJbp5vQgI4Q0ibles">
       <button class="tab active" data-tab="skills" role="tab" aria-selected="true" aria-label="查看技能图谱" data-page-node-id="raVbP7D2kvR0HNoPkhybtc">技能图谱</button>
-      <button class="tab" data-tab="progress" role="tab" aria-selected="false" aria-label="查看我的掌握进度" data-page-node-id="7oapsgmEdoPEzLtdfsuDJh">我的进度</button>
+      <button class="tab" data-tab="legends" role="tab" aria-selected="false" aria-label="查看羽坛封神榜" data-page-node-id="7oapsgmEdoPEzLtdfsuDJh">封神榜</button>
       <button class="tab" data-tab="matches" role="tab" aria-selected="false" aria-label="查看赛事精选" data-page-node-id="SKjQsgVNT7GdHdgVM8NXsc">赛事精选</button>
       <button class="tab" data-tab="schedule" role="tab" aria-selected="false" aria-label="查看2026赛程表" data-page-node-id="zoNWS9Rx4VJb0hK7eZsgAr">赛程表</button>
     </div>
+    <button class="donate-btn" id="donate-btn" type="button" aria-haspopup="dialog" aria-label="支持这个项目"><i aria-hidden="true"></i>支持项目</button>
   </div>
 </nav>
 
@@ -502,43 +598,35 @@ footer b{color:var(--ink)}
 
 </div><!-- /#page-skills -->
 
-<!-- ============ 页面2：我的掌握进度 ============ -->
-<div class="page" id="page-progress" data-tab="progress" hidden data-page-node-id="A7SU8SqgfeFnMHUqdn6TIm">
+<!-- ============ 页面2：封神榜 ============ -->
+<div class="page" id="page-legends" data-tab="legends" hidden>
 
-<section id="myprogress" data-page-node-id="mJDcuBDDH1FAgWTvc7ByS5">
-  <div class="section-head" data-page-node-id="QFvWXUGlRHTVUq5Il2sShw">
-    <div class="section-eyebrow" data-page-node-id="VE0L1RORW1oAS2LgdELXje">My Mastery · 我的掌握进度</div>
-    <h1 data-page-node-id="y6QgCWOFsj9ngJ6Qv38CrO">看看你已经走到哪里</h1>
-    <p data-page-node-id="8DAYQXryHeChAQGEKDFD59">这里只放你自己的掌握情况：整体完成度、各状态分布，以及三十六项技能的逐条核对清单。</p>
+<section id="legends">
+  <div class="section-head">
+    <div class="section-eyebrow">Hall of Fame · 封神榜</div>
+    <h1>封神榜 · 羽坛历代强者</h1>
+    <p>收录世界羽坛各个时代的顶级选手：荣誉履历、综合战力评分，以及他们手上的那把战拍。战力是按奥运/世锦赛荣誉、巅峰统治周期与历史影响力综合研判的主观评分（满分 100），仅供球迷参考。</p>
   </div>
 
-  <div class="stat-grid" data-page-node-id="koDXQW9FtuW0xLCGQZTOFB">
-    <div class="stat-box mastered" data-page-node-id="v3Gd2hGGhfyoZU7rsVgDyK"><b id="st-mastered" data-page-node-id="RCQfddWndyD3YjV7fZaaRC">0</b><span data-page-node-id="OIRdbIxW2C3RhmKIbFLYTr">已熟练</span></div>
-    <div class="stat-box learning" data-page-node-id="nuyV8hga7XGZENOhqLJ9Os"><b id="st-learning" data-page-node-id="O8DbsMPqaQXLB4JLHDhRIm">0</b><span data-page-node-id="VZ1lsWbwTvRVBzpTx9jnlB">学习中</span></div>
-    <div class="stat-box locked" data-page-node-id="Br1qlEDF8NdFEjPE8U1Csa"><b id="st-locked" data-page-node-id="04LrBSfn1iRT5mUnMyVmhq">36</b><span data-page-node-id="Yo9vDtNM4J835yXhRNWr40">未掌握</span></div>
-    <div class="stat-box pct" data-page-node-id="tbIXe2GcONJnDNqBN5sdaD"><b id="progress-pct" data-page-node-id="r4DAaTEfdMbGhsLxydCfyJ">0%</b><span data-page-node-id="96iwLClFrTWFLRUkPEDB6S">总完成度</span></div>
+  <div class="stat-grid">
+    <div class="stat-box"><b id="lg-count">0</b><span>收录选手</span></div>
+    <div class="stat-box lime"><b id="lg-country">0</b><span>覆盖国家 / 地区</span></div>
+    <div class="stat-box orange"><b id="lg-top">0</b><span>最高战力</span></div>
+    <div class="stat-box dim"><b id="lg-avg">0</b><span>平均战力</span></div>
   </div>
-  <div class="progress-track xl" data-page-node-id="orQHqKCL9dfpAcwPz3z1gl"><div class="progress-fill" id="progress-fill" data-page-node-id="HqFyYz0bFb6A7uYTdqqYn5"></div></div>
+
+  <div class="filter-bar" id="legend-bar" style="margin-top:32px">
+    <span class="label">筛选</span>
+    <button class="chip active" data-cat="all">全部</button>
+    <button class="chip" data-cat="男单">男单</button>
+    <button class="chip" data-cat="女单">女单</button>
+    <button class="chip" data-cat="双打">双打</button>
+  </div>
+
+  <div class="legends-grid" id="legends-grid"></div>
 </section>
 
-<section id="mytree" data-page-node-id="HAVd1B1D9pMGsZEil9D55d">
-  <div class="section-head" data-page-node-id="QzjnwiAMD6rGiyYHpD4bqr">
-    <div class="section-eyebrow" data-page-node-id="Zla8GDac1Bgs9SArlTqHll">Skill Checklist · 技能清单</div>
-    <h2 data-page-node-id="toTjO25iBnEUcp4eqSfnpJ">三十六项技能逐条核对</h2>
-    <p data-page-node-id="ifTVLX77m6ZwUIb6FzoUkb">按状态筛选，可以快速找出还没练的技能，集中火力补齐短板。</p>
-  </div>
-  <div class="filter-bar" id="filter-bar" data-page-node-id="S04CzXwXstnRIo8Dkko6MH">
-    <span class="label" data-page-node-id="Y8VtDgntXA8z1PiOIupTSC">筛选</span>
-    <button class="chip active" data-filter="all" data-page-node-id="gofHWstixfEIDHVr4Eb6zH">全部</button>
-    <button class="chip" data-filter="locked" data-page-node-id="ir0Qlw4pAhZm1aM1UK67Kp">未掌握</button>
-    <button class="chip" data-filter="learning" data-page-node-id="vK8FOdLEGiVfGcebzAb8xF">学习中</button>
-    <button class="chip" data-filter="mastered" data-page-node-id="KYpgNx2Q5HgFwc1UbbBzDy">已熟练</button>
-    <button class="reset-btn" id="reset-btn" data-page-node-id="9YBtFTxHaR2zI7lvA5lA0n">重置进度</button>
-  </div>
-  <div class="mytree-grid" id="mytree-grid" data-page-node-id="vBYe45imlAdGOAOPZOuQDX"></div>
-</section>
-
-</div><!-- /#page-progress -->
+</div><!-- /#page-legends -->
 
 <!-- ============ 页面3：赛事精选 ============ -->
 <div class="page" id="page-matches" data-tab="matches" hidden data-page-node-id="D3we4aEYObPLNTAn8KpTD7">
@@ -614,8 +702,42 @@ footer b{color:var(--ink)}
 
 <footer data-page-node-id="neSSxYVBiElyitxpAKCg11">
   <p data-page-node-id="P1XEDzByGTDGbEH7L5eEop"><b data-page-node-id="rNzkl9pvp8EuaPaTEv6e84">羽球进阶</b> · 中羽等级技能图谱 · 仅供业余爱好者学习参考，等级划分综合社区共识整理</p>
-  <p style="margin-top:8px" data-page-node-id="aGDoRoimsPTqJsWVr4asgi">视频推荐为搜索入口，请支持原创作者 · 进度数据保存在你的浏览器本地</p>
+  <p style="margin-top:8px" data-page-node-id="aGDoRoimsPTqJsWVr4asgi">视频推荐为搜索入口，请支持原创作者 · 数据如有疏漏欢迎指正</p>
+  <p style="margin-top:14px"><button class="foot-donate" id="donate-btn-2" type="button">支持项目 →</button></p>
 </footer>
+
+<div class="donate-modal" id="donate-modal" hidden>
+  <div class="donate-backdrop" data-donate-close></div>
+  <div class="donate-panel" role="dialog" aria-modal="true" aria-labelledby="donate-title">
+    <div class="donate-head">
+      <div>
+        <div class="donate-kicker">SUPPORT · 支持这个项目</div>
+        <h3 id="donate-title">如果它对你有用，请我喝瓶水</h3>
+      </div>
+      <button class="donate-close" type="button" data-donate-close aria-label="关闭">×</button>
+    </div>
+    <div class="donate-body">
+      <p class="donate-note">技能数据、球拍考据和赛程整理都靠业余时间一点一点攒出来，站点<b>不接广告、不设付费内容</b>，所有教程入口永久免费。如果这份图谱帮你少走了几步弯路，扫码随意支持一下就好——多少都是心意。</p>
+      <div class="donate-codes">
+        <figure class="donate-code">
+          <div class="code-frame">
+            <span class="code-ph"><b>微信收款码</b><span>二维码图片缺失 · assets/donate-wx.jpg</span></span>
+            <img src="assets/donate-wx.jpg" alt="微信收款码" loading="lazy" onload="this.parentElement.classList.add('has-img')" onerror="this.remove()">
+          </div>
+          <figcaption><b>微信支付</b><span>WECHAT PAY</span></figcaption>
+        </figure>
+        <figure class="donate-code">
+          <div class="code-frame">
+            <span class="code-ph"><b>支付宝收款码</b><span>二维码图片缺失 · assets/donate-zfb.jpg</span></span>
+            <img src="assets/donate-zfb.jpg" alt="支付宝收款码" loading="lazy" onload="this.parentElement.classList.add('has-img')" onerror="this.remove()">
+          </div>
+          <figcaption><b>支付宝</b><span>ALIPAY</span></figcaption>
+        </figure>
+      </div>
+      <p class="donate-foot">支持完全自愿，不影响任何功能的正常使用 · 金额随意，一元也是鼓励 · 感谢每一位愿意留下的人</p>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -697,7 +819,6 @@ LEVELS.forEach(L=>L.skills.forEach((s,i)=>{ s.id=`s${L.id}-${i+1}` }));
 const STORE_KEY = "badminton-skill-states-v1";
 let states = loadStates();
 let activeLevel = 1;
-let myFilter = "all";
 
 /* ---------- 存储 ---------- */
 function loadStates(){
@@ -712,16 +833,7 @@ function dyUrl(kw){ return "https://www.douyin.com/search/" + encodeURIComponent
 function stateOf(id){ return states[id] || "locked"; }
 function allSkills(){ return LEVELS.flatMap(L=>L.skills.map(s=>({...s, level:L}))); }
 
-/* ---------- 统计 ---------- */
-function stats(){
-  let m=0,l=0; const total=allSkills().length;
-  allSkills().forEach(s=>{
-    const st=stateOf(s.id);
-    if(st==="mastered")m++;
-    else if(st==="learning")l++;
-  });
-  return {mastered:m, learning:l, locked:total-m-l, total};
-}
+/* ---------- 统计：单等级熟练度 ---------- */
 function levelStats(lid){
   const L=LEVELS.find(x=>x.id===lid);
   let m=0; L.skills.forEach(s=>{ if(stateOf(s.id)==="mastered")m++; });
@@ -806,42 +918,6 @@ function skillCardHTML(s){
   </article>`;
 }
 
-/* ---------- 渲染：我的技能树 ---------- */
-function renderMyTree(){
-  const grid=document.getElementById("mytree-grid");
-  let list=allSkills().map(s=>({...s, st:stateOf(s.id)}));
-  if(myFilter!=="all") list=list.filter(s=>s.st===myFilter);
-  if(list.length===0){
-    grid.innerHTML=`<div class="mytree-empty">
-      <b>这里空空如也</b>
-      ${myFilter==="mastered" ? "还没有标记为「已熟练」的技能，去点亮第一个吧。" :
-        myFilter==="learning" ? "当前没有「学习中」的技能，去技能详情里标记几项吧。" :
-        myFilter==="locked" ? "太棒了！所有技能都已开始练习。" : "暂无数据。"}
-    </div>`;
-    return;
-  }
-  grid.innerHTML=list.map(s=>`
-    <div class="mytree-card ${s.st}">
-      <div class="mtc-top">
-        <span class="mtc-lv">${s.level.tag}</span>
-        <span class="mtc-status ${s.st==='mastered'?'s-mastered':s.st==='learning'?'s-learning':''}">${s.st==='mastered'?'已熟练':s.st==='learning'?'学习中':'未掌握'}</span>
-      </div>
-      <div class="mtc-name">${s.name}</div>
-      <div class="mtc-desc">${s.desc}</div>
-    </div>`).join("");
-}
-
-/* ---------- 渲染：顶部进度条 ---------- */
-function renderProgress(){
-  const {mastered,learning,locked,total}=stats();
-  document.getElementById("st-mastered").textContent=mastered;
-  document.getElementById("st-learning").textContent=learning;
-  document.getElementById("st-locked").textContent=locked;
-  const pct=Math.round(mastered/total*100);
-  document.getElementById("progress-fill").style.width=pct+"%";
-  document.getElementById("progress-pct").textContent=pct+"%";
-}
-
 /* ---------- 行为 ---------- */
 function selectLevel(id){
   activeLevel=id;
@@ -877,16 +953,6 @@ function setState(id, st){
   // 局部刷新，避免整页重排跳变
   renderTree();
   renderDetail();
-  renderMyTree();
-  renderProgress();
-}
-
-function setFilter(f){
-  myFilter=f;
-  document.querySelectorAll("#filter-bar .chip").forEach(c=>{
-    c.classList.toggle("active", c.dataset.filter===f);
-  });
-  renderMyTree();
 }
 
 /* ============================================================
@@ -924,6 +990,142 @@ const MATCHES = [
   { cat:"双打名局", title:"阿山/塞蒂亚万 vs 鲍伊/摩根森 · 双打教科书", tag:"老而弥坚", year:"2019", event:"BWF World Tour", desc:"印尼老将组合的网前与小技术范本，双打爱好者的必看课。", kw:"阿山 塞蒂亚万 鲍伊 摩根森 双打" },
   { cat:"双打名局", title:"李洋/王齐麟 vs 李俊慧/刘雨辰 · 2020 东京奥运决赛", tag:"黄金男双", year:"2021", event:"东京奥运会", desc:"中国台北组合直落两局击败中国双塔，爆冷夺金。", kw:"李洋 王齐麟 李俊慧 刘雨辰 东京奥运 决赛" },
 ];
+
+/* ============================================================
+   封神榜数据：历代顶级选手（荣誉 / 战力 / 常用战拍）
+   power 为综合荣誉、巅峰统治周期与历史影响力的主观评分（满分 100）
+   ============================================================ */
+const LEGENDS = [
+  { name:"林丹", en:"Lin Dan", country:"中国", code:"CHN", cat:"男单", era:"1983 · 2002–2020", power:99,
+    honors:["羽坛唯一的「双圈全满贯」得主","2008 北京 / 2012 伦敦 奥运会男单金牌","5 次世锦赛男单冠军","6 次全英公开赛男单冠军"],
+    racket:"YONEX Voltric LD-Force" },
+  { name:"安赛龙", en:"Viktor Axelsen", country:"丹麦", code:"DEN", cat:"男单", era:"1994 · 2010 至今", power:96,
+    honors:["2020 东京 / 2024 巴黎 奥运会男单金牌","2017 / 2022 世锦赛男单冠军","欧洲羽坛史上战绩最好的男单","长期稳居世界排名第一"],
+    racket:"YONEX Astrox 100ZZ" },
+  { name:"安洗莹", en:"An Se-young", country:"韩国", code:"KOR", cat:"女单", era:"2002 · 2019 至今", power:95,
+    honors:["2024 巴黎奥运会女单金牌","2023 年世锦赛女单冠军","2023 年杭州亚运会女单金牌","现役女单世界第一"],
+    racket:"YONEX Astrox 77" },
+  { name:"李宗伟", en:"Lee Chong Wei", country:"马来西亚", code:"MAS", cat:"男单", era:"1982 · 2000–2019", power:94,
+    honors:["3 届奥运会男单银牌（2008/2012/2016）","4 次世锦赛男单亚军","世界排名第一累计 349 周，历史纪录","职业生涯 46 个超级赛冠军"],
+    racket:"YONEX Duora 10 LCW" },
+  { name:"蔡赟 / 傅海峰", en:"Cai Yun / Fu Haifeng", country:"中国", code:"CHN", cat:"双打", era:"1980 / 1983 · 2002–2016", power:94,
+    honors:["2012 伦敦奥运会男双金牌","2008 北京奥运会男双银牌","4 次世锦赛男双冠军","国羽男双「风云组合」，一个时代的代名词"],
+    racket:"李宁 N7 / N9" },
+  { name:"张宁", en:"Zhang Ning", country:"中国", code:"CHN", cat:"女单", era:"1975 · 1994–2008", power:93,
+    honors:["2004 雅典 / 2008 北京 奥运会女单金牌","奥运史上首位卫冕女单冠军的选手","2003 年世锦赛女单冠军","29 岁才首夺奥运金牌，大器晚成"],
+    racket:"YONEX Nanospeed 9000 S" },
+  { name:"苏卡穆约 / 吉迪恩", en:"Sukamuljo / Gideon", country:"印度尼西亚", code:"INA", cat:"双打", era:"1995 / 1991 · 2015–2022", power:93,
+    honors:["2018 雅加达亚运会男双金牌","世界排名第一累计超过 200 周","绰号「小黄人」的网前统治级组合","世界羽联年度最佳男运动员"],
+    racket:"YONEX Astrox 88S Pro / 88D Pro" },
+  { name:"戴资颖", en:"Tai Tzu-ying", country:"中国台湾", code:"TPE", cat:"女单", era:"1994 · 2009 至今", power:92,
+    honors:["世界排名第一累计 214 周，女单历史纪录","2018 年雅加达亚运会女单金牌","2020 东京奥运会女单银牌","3 次全英公开赛女单冠军"],
+    racket:"VICTOR Thruster F Claw（TK-F 隼）" },
+  { name:"陶菲克", en:"Taufik Hidayat", country:"印度尼西亚", code:"INA", cat:"男单", era:"1981 · 1996–2013", power:92,
+    honors:["2004 雅典奥运会男单金牌","2005 年世锦赛男单冠军","2006 年多哈亚运会男单金牌","以反手击球与网前假动作定义了一个流派"],
+    racket:"YONEX ArcSaber Z-Slash" },
+  { name:"陈清晨 / 贾一凡", en:"Chen Qingchen / Jia Yifan", country:"中国", code:"CHN", cat:"双打", era:"1997 · 2013 至今", power:92,
+    honors:["2024 巴黎奥运会女双金牌","4 次世锦赛女双冠军（2017/2021/2022/2023）","长期占据女双世界第一","「凡晨组合」，国羽女双新一代领军"],
+    racket:"YONEX Astrox 100ZZ / Nanoflare 800" },
+  { name:"谌龙", en:"Chen Long", country:"中国", code:"CHN", cat:"男单", era:"1989 · 2007–2023", power:91,
+    honors:["2016 里约奥运会男单金牌","2014 / 2015 世锦赛男单冠军","2020 东京奥运会男单银牌","林丹之后国羽男单的接棒者"],
+    racket:"李宁 N55 / 雷霆 80" },
+  { name:"卡罗琳娜·马林", en:"Carolina Marin", country:"西班牙", code:"ESP", cat:"女单", era:"1993 · 2010 至今", power:91,
+    honors:["2016 里约奥运会女单金牌","3 次世锦赛女单冠军（2014/2015/2018）","欧洲历史上最成功的羽毛球女单选手","以高强度进攻打法改变了女单格局"],
+    racket:"YONEX Nanoflare 700" },
+  { name:"李洋 / 王齐麟", en:"Lee Yang / Wang Chi-lin", country:"中国台湾", code:"TPE", cat:"双打", era:"1995 · 2015 至今", power:91,
+    honors:["2020 东京 / 2024 巴黎 奥运会男双金牌","奥运羽毛球男双史上首对卫冕组合","中国台湾羽球史上首枚奥运金牌","「麟洋配」"],
+    racket:"YONEX Nanoflare 800 / VICTOR TK-F" },
+  { name:"李龙大", en:"Lee Yong-dae", country:"韩国", code:"KOR", cat:"双打", era:"1988 · 2004 至今", power:90,
+    honors:["2008 北京奥运会混双金牌","2009 / 2014 世锦赛男双冠军","2012 伦敦奥运会男双铜牌","韩国双打史上最具代表性的选手"],
+    racket:"YONEX ArcSaber 系列" },
+  { name:"山口茜", en:"Akane Yamaguchi", country:"日本", code:"JPN", cat:"女单", era:"1997 · 2013 至今", power:90,
+    honors:["2021 / 2022 世锦赛女单冠军（卫冕）","世界排名第一累计超过 100 周","身材不高却以覆盖面积与耐力著称","日本女单的旗帜人物"],
+    racket:"YONEX Astrox 100ZZ" },
+  { name:"陈雨菲", en:"Chen Yufei", country:"中国", code:"CHN", cat:"女单", era:"1998 · 2014 至今", power:90,
+    honors:["2020 东京奥运会女单金牌","2022 年全英公开赛女单冠军","曾登顶女单世界第一","国羽女单新一代核心"],
+    racket:"YONEX Astrox 77 Pro" },
+  { name:"桃田贤斗", en:"Kento Momota", country:"日本", code:"JPN", cat:"男单", era:"1994 · 2012 至今", power:89,
+    honors:["2018 / 2019 世锦赛男单冠军（卫冕）","2019 单赛季 11 冠，追平历史纪录","世界排名第一累计 121 周","以极致控球与失误率著称"],
+    racket:"YONEX Astrox 99 Pro" },
+  { name:"阿山 / 塞蒂亚万", en:"Ahsan / Setiawan", country:"印度尼西亚", code:"INA", cat:"双打", era:"1987 / 1984 · 2004 至今", power:88,
+    honors:["3 次世锦赛男双冠军（2013/2015/2019）","2 次全英公开赛男双冠军","以网前小球与战术智慧立足的老将组合","印尼男双「传帮带」的典范"],
+    racket:"VICTOR Auraspeed 100X / TK-F" },
+  { name:"李梓嘉", en:"Lee Zii Jia", country:"马来西亚", code:"MAS", cat:"男单", era:"1998 · 2015 至今", power:87,
+    honors:["2020 年全英公开赛男单冠军","2021 年全英公开赛亚军","马来西亚男单新一代领军人物","李宗伟之后的大马一单"],
+    racket:"VICTOR Thruster Ryuga（龙牙之刃）" },
+  { name:"辛杜", en:"P. V. Sindhu", country:"印度", code:"IND", cat:"女单", era:"1995 · 2009 至今", power:87,
+    honors:["2019 年世锦赛女单冠军","2016 里约奥运会女单银牌","2020 东京奥运会女单铜牌","印度羽球史上最成功的女选手"],
+    racket:"李宁 AxForce 80" },
+  { name:"拉差诺·因达农", en:"Ratchanok Intanon", country:"泰国", code:"THA", cat:"女单", era:"1995 · 2009 至今", power:87,
+    honors:["2013 年世锦赛女单冠军，史上最年轻的女单世界冠军","2018 年全英公开赛女单冠军","泰国羽球代表人物","以细腻的手感与小技术闻名"],
+    racket:"YONEX Nanoflare 700" },
+];
+
+let legendCat = "all";
+
+function legendRanked(){
+  return LEGENDS.map(p=>({...p})).sort((a,b)=>b.power-a.power);
+}
+
+function renderLegends(){
+  const grid = document.getElementById("legends-grid");
+  if(!grid) return;
+  const ranked = legendRanked();
+  const list = ranked.map((p,i)=>({...p, rank:i+1}));
+  const shown = legendCat === "all" ? list : list.filter(p=>p.cat===legendCat);
+
+  // 总览数据
+  const countries = new Set(LEGENDS.map(p=>p.country));
+  const top = Math.max(...LEGENDS.map(p=>p.power));
+  const avg = Math.round(LEGENDS.reduce((n,p)=>n+p.power,0) / LEGENDS.length);
+  document.getElementById("lg-count").textContent = LEGENDS.length;
+  document.getElementById("lg-country").textContent = countries.size;
+  document.getElementById("lg-top").textContent = top;
+  document.getElementById("lg-avg").textContent = avg;
+
+  grid.innerHTML = shown.map(p=>{
+    const filled = Math.max(0, Math.min(10, Math.round(p.power/10)));
+    let segs = "";
+    for(let i=0;i<10;i++) segs += `<i class="${i<filled?"on":""}"></i>`;
+    return `
+    <article class="legend-card${p.rank<=3?" top":""}">
+      <div class="legend-top">
+        <div class="legend-rank">${String(p.rank).padStart(2,"0")}<small>RANK</small></div>
+        <div class="legend-id">
+          <span class="legend-flag">${p.code}</span>
+          <div class="legend-country">${p.country}</div>
+        </div>
+      </div>
+      <div>
+        <div class="legend-name">${p.name}</div>
+        <div class="legend-en">${p.en}</div>
+        <div class="legend-meta"><span class="legend-cat">${p.cat}</span><span class="legend-era">${p.era}</span></div>
+      </div>
+      <ul class="legend-honors">${p.honors.map(h=>`<li>${h}</li>`).join("")}</ul>
+      <div class="legend-footer">
+        <div class="legend-power">
+          <div class="legend-power-num">${p.power}</div>
+          <div class="legend-power-body">
+            <div class="legend-power-label">POWER / 100</div>
+            <div class="power-bar">${segs}</div>
+          </div>
+        </div>
+        <div class="legend-racket">
+          <span class="rk-label">常用拍</span>
+          <span class="rk-model">${p.racket}</span>
+        </div>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function setLegendCat(cat){
+  legendCat = cat;
+  document.querySelectorAll("#legend-bar .chip").forEach(c=>{
+    c.classList.toggle("active", c.dataset.cat===cat);
+  });
+  renderLegends();
+}
 
 /* ============================================================
    2026 BWF 赛程数据（综合官方赛历整理）
@@ -1152,12 +1354,30 @@ function setTab(tab){
   }
 }
 
+/* ---------- 支持项目：二维码弹层 ---------- */
+let donateLastFocus = null;
+function openDonate(){
+  const m = document.getElementById("donate-modal");
+  if(!m) return;
+  donateLastFocus = document.activeElement;
+  m.hidden = false;
+  document.body.classList.add("donate-open");
+  const c = m.querySelector(".donate-close");
+  if(c) c.focus();
+}
+function closeDonate(){
+  const m = document.getElementById("donate-modal");
+  if(!m || m.hidden) return;
+  m.hidden = true;
+  document.body.classList.remove("donate-open");
+  if(donateLastFocus && donateLastFocus.focus) donateLastFocus.focus();
+}
+
 /* ---------- 初始化 ---------- */
 function init(){
   renderTree();
   renderDetail();
-  renderMyTree();
-  renderProgress();
+  renderLegends();
   renderChannels();
   renderMatches();
   renderSchedule();
@@ -1169,9 +1389,9 @@ function init(){
   document.querySelectorAll("[data-goto]").forEach(el=>{
     el.addEventListener("click",e=>{ e.preventDefault(); setTab(el.dataset.goto); });
   });
-  // 技能筛选
-  document.querySelectorAll("#filter-bar .chip").forEach(c=>{
-    c.addEventListener("click",()=>setFilter(c.dataset.filter));
+  // 封神榜筛选
+  document.querySelectorAll("#legend-bar .chip").forEach(c=>{
+    c.addEventListener("click",()=>setLegendCat(c.dataset.cat));
   });
   // 赛程筛选
   document.querySelectorAll("#schedule-toolbar .fchip").forEach(c=>{
@@ -1180,12 +1400,19 @@ function init(){
   // 月份导航
   document.getElementById("cal-prev").addEventListener("click", prevMonth);
   document.getElementById("cal-next").addEventListener("click", nextMonth);
-  // 重置进度
-  document.getElementById("reset-btn").addEventListener("click",()=>{
-    if(confirm("确定要清空所有技能进度吗？此操作不可撤销。")){
-      states={}; saveStates();
-      renderTree();renderDetail();renderMyTree();renderProgress();
-    }
+  // 支持项目弹层
+  const donateBtn = document.getElementById("donate-btn");
+  const donateModal = document.getElementById("donate-modal");
+  if(donateBtn) donateBtn.addEventListener("click", openDonate);
+  const donateBtn2 = document.getElementById("donate-btn-2");
+  if(donateBtn2) donateBtn2.addEventListener("click", openDonate);
+  if(donateModal){
+    donateModal.querySelectorAll("[data-donate-close]").forEach(el=>{
+      el.addEventListener("click", closeDonate);
+    });
+  }
+  document.addEventListener("keydown", e=>{
+    if(e.key === "Escape") closeDonate();
   });
 }
 init();
